@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>MVP Quản lý học sinh QR</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}" />
+    <script src="https://unpkg.com/html5-qrcode" defer></script>
+    <script src="{{ url_for('static', filename='app.js') }}" defer></script>
+  </head>
+  <body>
+    <header>
+      <h1>🎉 MVP Quản lý học sinh bằng QR</h1>
+      <p id="authInfo">Chưa đăng nhập</p>
+    </header>
+
+    <main>
+      <section class="panel">
+        <h2>1) Đăng nhập</h2>
+        <form id="loginForm">
+          <label>Tài khoản <input id="loginUsername" value="admin" required /></label>
+          <label>Mật khẩu <input id="loginPassword" type="password" value="admin123" required /></label>
+          <button type="submit">Đăng nhập</button>
+        </form>
+
+        <h3>Tạo tài khoản (admin)</h3>
+        <form id="createUserForm">
+          <label>Username <input id="newUsername" /></label>
+          <label>Password <input id="newPassword" type="password" /></label>
+          <label>
+            Role
+            <select id="newRole">
+              <option value="teacher">teacher</option>
+              <option value="admin">admin</option>
+            </select>
+          </label>
+          <button type="submit" class="secondary">Tạo user</button>
+        </form>
+      </section>
+
+      <section class="panel">
+        <h2>2) Quản lý lớp</h2>
+        <form id="classForm" class="inline-form">
+          <input id="classNameInput" placeholder="Tên lớp (VD: 10A1)" />
+          <button type="submit">Tạo lớp</button>
+        </form>
+        <ul id="classList"></ul>
+      </section>
+
+      <section class="panel">
+        <h2>3) Quản lý học sinh</h2>
+        <form id="studentForm">
+          <label>Mã học sinh <input id="studentId" required placeholder="HS001" /></label>
+          <label>Họ tên <input id="studentName" required placeholder="Nguyễn Văn A" /></label>
+          <label>Ngày sinh <input id="studentDob" placeholder="2010-01-31" /></label>
+          <label>Tên phụ huynh <input id="parentName" placeholder="Nguyễn Văn B" /></label>
+          <label>SĐT phụ huynh <input id="parentPhone" placeholder="0909xxxxxx" /></label>
+          <label>Ảnh base64 <textarea id="avatarBase64" placeholder="(tùy chọn)"></textarea></label>
+          <label>
+            Lớp
+            <select id="studentClassSelect"></select>
+          </label>
+          <button type="submit">Lưu học sinh</button>
+        </form>
+        <ul id="studentList"></ul>
+      </section>
+
+      <section class="panel">
+        <h2>4) Điểm danh QR</h2>
+        <label>
+          Chọn lớp trước khi quét
+          <select id="attendanceClassSelect"></select>
+        </label>
+        <div class="actions">
+          <button id="startScanBtn">Bật camera</button>
+          <button type="button" id="stopScanBtn" class="secondary">Tắt camera</button>
+          <button type="button" id="clearAttendanceBtn" class="danger">Xóa lịch sử</button>
+        </div>
+        <div id="reader"></div>
+        <div class="manual-scan">
+          <input id="manualScanInput" placeholder='QR raw text hoặc JSON token' />
+          <button type="button" id="manualScanBtn" class="secondary">Điểm danh thủ công</button>
+        </div>
+        <div id="statsBox"></div>
+        <ul id="attendanceList"></ul>
+        <p id="scanMessage" class="message"></p>
+      </section>
+    </main>
+  </body>
+</html>
